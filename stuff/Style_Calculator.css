@@ -1,0 +1,153 @@
+*{
+    font-family: 'Inter', sans-serif;
+}
+h1{
+    color: #ffffff;
+    top: -40px;
+    position: relative;
+    font-size: 35px;
+    text-align: center;  
+}
+.calculatorBody{
+    background-color: #000000;
+    width: 260px;
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    resize: horizontal;
+    padding: 28px 2px 0px 10px;
+    margin-left: 40%;
+    margin-top: 4%;
+}
+#display{
+    background-color: #363636;
+    width: 240px;
+    height: 40px;
+    border: 1px solid #000000;
+    border-radius: 10px;
+    padding: 7px 10px 11px 0px;
+    top: -40px;
+    position: relative;
+    display: block;
+    font-size: 40px;
+    text-align:end;
+    color: #ffffff;
+}
+#calculatorButtons{
+    padding-left: 5px;
+}
+#calculatorButtons button{
+    border: 1px solid #000000;
+    border-radius: 30px;
+    display: inline-block;  
+    font-size: 30px;
+}
+#comma{
+    margin-left: 10px;
+}
+#plusMinus{
+    margin-left: 10px;
+}
+.doubleSizeButtons{
+    background-color: #3c7ee0;
+    height:50px;
+    width: 105px;
+    border: 1px solid #000000;
+    border-radius: 15px;
+    resize: horizontal;
+    display: inline-block; 
+    font-size: 30px;
+    margin-left: 5px;
+}
+.doubleSizeButtons:hover {
+    opacity: 80%;
+    cursor: pointer;
+}
+.numbers{
+    background-color: #3c7ee0;
+    height:50px;
+    width: 50px;
+    margin-left: 5px;
+}
+.numbers:hover {
+    opacity: 80%;
+    cursor: pointer;
+}
+.specialButton{
+    background-color: #eff8bc;
+    height:50px;
+    width: 50px;
+    margin-top: 10px;
+    margin-left: 5px;
+}
+.specialButton:hover {
+    opacity: 80%;
+    cursor: pointer;
+}
+.operatorButton{
+    background-color: #eff8bc;
+    height:50px;
+    width: 50px;
+    margin-left: 5px;
+    margin-top: 10px;
+}
+.operatorButton:hover {
+    opacity: 80%;
+    cursor: pointer;
+}
+.hoverOperator{
+    background-color: #c9ed00;
+    height:50px;
+    width: 50px;
+    margin-left: 1px;
+    margin-top: 10px;
+}
+#number0{
+    display: inline-block; 
+}
+#eraseButton{
+    background-color: #eff8bc;
+    display: inline-block;
+}
+.buttons{
+    position: relative;
+    top: -30px;
+}
+#calculatorButtons{
+    position: relative;
+    top: -30px;
+}
+.disabledButtons
+{
+    background-color: #ff0000;
+    height:50px;
+    width: 50px;
+    margin-left: 5px;
+    cursor: not-allowed;
+}
+.disabledButton0
+{
+    background-color: #ff0000;
+    border-radius: 15px;
+    height:50px;
+    width: 105px;
+    margin-left: 5px;
+    cursor: not-allowed;
+}
+.disabledOperatorButtons
+{
+    background-color: #ff0000;
+    height:50px;
+    width: 50px;
+    margin-left: 5px;
+    margin-top: 10px;
+    cursor: not-allowed;
+}
+.disabledSpecialButtons
+{
+    background-color: #ff0000;
+    height:50px;
+    width: 50px;
+    margin-top: 10px;
+    margin-left: 5px;
+    cursor: not-allowed;
+}
