@@ -4,38 +4,35 @@
         <meta charset="utf-8" />
         <link rel="stylesheet" href="./stuff/Style_Calculator.css"/>
     </head>
-
     <body>
         <div class="calculatorBody">
             <h1>Calculator</h1>
-            <display id="display">0</display>
+            <label type="text" id="display" value="0">0</label>
             <div id="calculatorButtons"> 
-
-                <button class="doubleSizeButtons" id="eraseButton">CE</button>
-                <button class="specialButton">C</button>
-                <button class="specialButton">/</button>
-
-                <button class="numbers">7</button>
-                <button class="numbers">8</button>
-                <button class="numbers">9</button>
-                <button class="specialButton">x</button>
-
-                <button class="numbers">4</button>
-                <button class="numbers">5</button> 
-                <button class="numbers">6</button>        
-                <button class="specialButton">-</button>
-
-                <button class="numbers">1</button>
-                <button class="numbers">2</button>
-                <button class="numbers">3</button>
-                <button class="specialButton">+</button>
-                
-                <button class="doubleSizeButtons" id="number0">0</button>
-                <button class="numbers">,</button>
-                <button class="specialButton">=</button>
-
+                <button class="doubleSizeButtons" id="eraseButton" value="0" onclick="calculatorReset(value)">C</button>
+                <button class="specialButton" id="plusMinus" onclick="clickingNegativeButton()">+/-</button>
+                <button class="operatorButton" id="division" value="/" onclick="clickingOperatorButton(value); highlightOperatorButton(event.currentTarget.classList)">/</button>
+            
+                <button class="numbers" id="7" value="7" onclick="clickingNumericalButton(value)">7</button>
+                <button class="numbers" id="8" value="8" onclick="clickingNumericalButton(value)">8</button>
+                <button class="numbers" id="9" value="9" onclick="clickingNumericalButton(value)">9</button>       
+                <button class="operatorButton" id="multiplication" value="x" onclick="clickingOperatorButton(value); highlightOperatorButton(event.currentTarget.classList)">x</button>
+            
+                <button class="numbers" id="4" value="4" onclick="clickingNumericalButton(value)">4</button>
+                <button class="numbers" id="5" value="5" onclick="clickingNumericalButton(value)">5</button>
+                <button class="numbers" id="6" value="6" onclick="clickingNumericalButton(value)">6</button>       
+                <button class="operatorButton" id="substract" value="-" onclick="clickingOperatorButton(value); highlightOperatorButton(event.currentTarget.classList)">-</button>
+            
+                <button class="numbers" id="1" value="1" onclick="clickingNumericalButton(value)">1</button>
+                <button class="numbers" id="2" value="2" onclick="clickingNumericalButton(value)">2</button>
+                <button class="numbers" id="3" value="3" onclick="clickingNumericalButton(value)">3</button>
+                <button class="operatorButton" id="add" value="+" onclick="clickingOperatorButton(value); highlightOperatorButton(event.currentTarget.classList)">+</button>
+            
+                <button class="doubleSizeButtons" id="number0" value="0" onclick="clickingNumericalButton(value)">0</button>
+                <button class="numbers" id="comma" value="," onclick="clickingNumericalButton(value)">,</button>
+                <button class="specialButton" id="equal" value="=" onclick="clickingOperatorButton(value); unhighlightOperatorButton()">=</button>
             </div>
         </div>
+        <script src="./stuff/Calculator.js"></script>
     </body>
 </html>
-    

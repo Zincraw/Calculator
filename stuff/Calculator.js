@@ -1,110 +1,104 @@
 const allButtonsHtml = document.querySelectorAll('button');
 const allNumberButtonsHtml = document.querySelectorAll('.numbers');
+const display = document.getElementById('display');
 
 let num1;
 let num2;
-let operator = null;
-let multipleOperationCheck = false;
+let operator;
+let isMultipleOperationCheck = false;
 let result;
 let doubleOperation;
-let numFalse = false;
-let errorBool = false;
+let isNumFalse = false;
+let isErrorInDisplay = false;
 
-document.addEventListener("keydown", (event) => {
+let falseB = false;
+let trueB = true;
+
+document.addEventListener("keydown", (event) => 
+{
     event.preventDefault();
     var keyValue = event.key;
-    
-    if (keyValue == "Escape" || keyValue == "Space") calculatorReset('0');
-    if (keyValue == "," || keyValue == ".") getNumericValueClickingButton(",");
-    if (keyValue == "*") 
-    {
-        clickingOperationButtons('x')
-        highlightOperatorButton(document.getElementById('multiplication').classList);
-    }
-    if (keyValue == "+")  
-    {
-        clickingOperationButtons('+')
-        highlightOperatorButton(document.getElementById('add').classList);
-    }
-    if (keyValue == "-")
-    {
-        clickingOperationButtons('-')
-        highlightOperatorButton(document.getElementById('substract').classList);
-    }
-    if (keyValue == "/")
-    {
-        clickingOperationButtons('/')
-        highlightOperatorButton(document.getElementById('division').classList);
-    }
-    if (keyValue == "=" || keyValue == "Enter") clickingOperationButtons('=')
-    if (keyValue == "Control") changeToNegativeOrPositiveButton('-1')
-    if (keyValue >= 0 && keyValue <= 9) 
-    {
-       getNumericValueClickingButton(keyValue);
-    }
 
+    if (keyValue == "Escape" || keyValue == "Space") calculatorReset()
+    else 
+    {        
+        if (keyValue == "*" || keyValue == "/" || keyValue == "+" || keyValue == "-" || keyValue == "=" || keyValue == "Enter") 
+        {
+            clickingOperatorButton(keyValue);            
+        }
+        if (keyValue == "Control") clickingNegativeButton();
+        if ((keyValue >= 0 && keyValue <= 9) || keyValue==",") clickingNumericalButton(keyValue);
+    }
 });
 
-function countNumbers(num) { return num.replace(/[^0-9]/g, '').length;}
+function countNumbers(num) { return num.replace(/[^0-9]/g, '').length;}  
 
-function getNumericValueClickingButton(x) 
+/*
+function setCalculatorButtonStatus(currentOperator) {
+    if currentOperator is nothing all unhighlight else just highlight currentOperator;
+    if isCommaInDisplay -> comma.desactivate;
+}
+*/
+
+function clickingNumericalButton(x) 
 {
-    if(errorBool) return;
-    let displayInfo = document.getElementById('display');
-    let commaChecker = displayInfo.innerHTML.includes(',');
+    if(isErrorInDisplay) return;
+    let isCommaInDisplay = display.innerHTML.includes(',');
+    /*
     if (result != null) 
     {
-        displayInfo.innerHTML = '0';
+        display.innerHTML = '0';
         result = null;
     }
-    if(x == ',' && !numFalse)
-        {
+    */
+    if(x == ',' && !isNumFalse)
+    {
         document.getElementById('comma').disabled = true; 
         document.getElementById('comma').style.color = document.getElementById('comma').style.backgroundColor; 
         document.getElementById('comma').style.cursor = 'not-allowed';
-        }
+    }
 
-    if(numFalse)
+    if(isNumFalse)
         {
-            displayInfo.innerHTML = '';
+            display.innerHTML = '';
             if (x == ',')
-                displayInfo.innerHTML = '0,';
+                display.innerHTML = '0,';
             else 
-                displayInfo.innerHTML += x;
+                display.innerHTML += x;
         }
-    else if (displayInfo.innerHTML == '0') 
+    else if (display.innerHTML == '0') 
         {
             if(x == ',')        
-                displayInfo.innerHTML = '0,';
+                display.innerHTML = '0,';
             else
-                displayInfo.innerHTML = x;  
+                display.innerHTML = x;  
         }
-    else if (countNumbers(displayInfo.innerHTML) >= 10) 
+    else if (countNumbers(display.innerHTML) >= 10) 
         return; 
-    else if (commaChecker && x == ',') 
+    else if (isCommaInDisplay && x == ',') 
         return;
-    else if (displayInfo != '' && operator != null && multipleOperationCheck)
+    else if (display != '' && operator != null && multipleOperationCheck)
     {
-        displayInfo.innerHTML = '';
-        displayInfo.innerHTML += x;
+        display.innerHTML = '';
+        display.innerHTML += x;
     }
     else 
     {
-        displayInfo.innerHTML += x; 
-        if (countNumbers(displayInfo.innerHTML) >= 10) 
+        display.innerHTML += x; 
+        if (countNumbers(display.innerHTML) >= 10) 
         {
             disablingButtonsExceptOperators();
         }
     }
     multipleOperationCheck = false;
-    numFalse = false;
-    enablingNegativeOrPositiveButton();
-    enablingButton0();
-    
+    isNumFalse = false;
+    setButtonStatus('plusMinus', false);
+    setButtonStatus('number0', false);
 }
 
-function highlightOperatorButton(changeClass)
+function highlightOperatorButton(buttonId)
 {
+    buttonId = document.getElementById(changeClass).classList;
     unhighlightOperatorButton();
     changeClass.add("hoverOperator");
 }
@@ -118,24 +112,23 @@ function unhighlightOperatorButton()
     }
 }
 
-function calculatorReset(x)
+function calculatorReset()
 {
-    enablingAllButtons();
-    disablingButton0();
-    disablingNegativeOrPositiveButton();
+    setAllButtonsStatus(true);
+    setButtonStatus('number0', true);
+    setButtonStatus('plusMinus', true);
     unhighlightOperatorButton();
-    document.getElementById('display').innerHTML = x;
+    document.getElementById('display').innerHTML = '0';
     num1 = null;
     num2 = null;
     operator = null;
     result =  null;
     multipleOperationCheck = false;
-    errorBool = false;
+    isErrorInDisplay = false;
 }
 
-function changeToNegativeOrPositiveButton()
+function clickingNegativeButton()
 {
-    let display = document.getElementById('display');
     if (display.textContent[0] == '-') 
     {
         display.textContent = display.textContent.substring(1, display.textContent.length)
@@ -147,112 +140,103 @@ function changeToNegativeOrPositiveButton()
 
 }
 
-function disablingButton0()
+function setButtonStatus(buttonId, status)
 {
-    document.getElementById('number0').disabled = true; document.getElementById('number0').style.color = document.getElementById('number0').style.backgroundColor; document.getElementById('number0').style.cursor = 'not-allowed';
+    document.getElementById(buttonId).disabled = !status;
+    if (!status) 
+    {        
+        document.getElementById(buttonId).style.color = '#000000'; 
+        document.getElementById(buttonId).style.cursor = 'pointer';
+    }
+    else 
+    {        
+        document.getElementById(buttonId).style.color = document.getElementById(buttonId).style.backgroundColor; 
+        document.getElementById(buttonId).style.cursor = 'not-allowed';
+    }
 }
 
-function enablingButton0()
+function setAllButtonsStatus(status)
 {
-    document.getElementById('number0').disabled = false; document.getElementById('number0').style.color = '#000000'; document.getElementById('number0').style.cursor = 'pointer';
-}
-
-function disablingNegativeOrPositiveButton()
-{
-    document.getElementById('plusMinus').disabled = true; document.getElementById('plusMinus').style.color = document.getElementById('plusMinus').style.backgroundColor; document.getElementById('plusMinus').style.cursor = 'not-allowed';
-}
-
-function enablingNegativeOrPositiveButton()
-{
-    document.getElementById('plusMinus').disabled = false; document.getElementById('plusMinus').style.color = '#000000'; document.getElementById('plusMinus').style.cursor = 'pointer';
-}
-
-function enablingButtonsExceptOperators()
-{
-    allButtonsHtml.forEach(elements => {elements.disabled = false; elements.style.color = '#000000'; elements.style.cursor = 'pointer'});
-}
-
-function disablingButtonsExceptOperators()
-{
-    allNumberButtonsHtml.forEach(elements => {elements.disabled = true; elements.style.color = elements.style.backgroundColor; elements.style.cursor = 'not-allowed'});
-    document.getElementById('number0').disabled = true; document.getElementById('number0').style.color = document.getElementById('number0').style.backgroundColor; document.getElementById('number0').style.cursor = 'not-allowed';
-}
-
-function enablingAllButtons()
-{
-    allButtonsHtml.forEach(elements => {elements.disabled = false; elements.style.color = '#000000'; elements.style.cursor = 'pointer'});
-}
-
-function disablingAllButtons()
-{
-    errorBool = true;
-    allButtonsHtml.forEach(elements => {elements.disabled = true; elements.style.color = elements.style.backgroundColor; elements.style.cursor = 'not-allowed'});
-    allButtonsHtml[0].disabled = false;
-    allButtonsHtml[0].style.color = '#000000'; allButtonsHtml[0].style.cursor = 'pointer';
-    display.textContent = 'ERROR';
-}
-
-
-function clickingOperationButtons(button)
-{
-    if(errorBool) return;
-    if (document.getElementById('display').textContent != 'ERROR') 
+    allButtonsHtml.forEach(button => setButtonStatus(button.id, !status));
+    if (!status) 
     {
-        enablingButtonsExceptOperators();
-        if(operator == null && button != '=')
-        {
-            gettingFirstNumOperation(button);
-        }    
-        else if (button == '=' && operator != null)
-        {
-            operationClickingEqual();
-        }  
-        else if (button == '=' && operator == null) 
-        {
-            if (display.textContent[display.textContent.length-1] == ',') 
-                display.textContent = display.textContent.substring(0, display.textContent.length-1)
+        isErrorInDisplay = true;
+        setButtonStatus('eraseButton', true);
+        display.textContent = 'ERROR';
+    }
+    else 
+    {
+        setButtonStatus('eraseButton', true);
+    }
+}
 
-        }
-        else if (operator != null && result == null)
+function setStatusFromZeroToNine(status)
+{
+        allNumberButtonsHtml.forEach(button => setButtonStatus(button.id, status));
+        setButtonStatus('number0', status);
+}
+
+function clickingOperatorButton(button)
+{
+    if(!isErrorInDisplay) 
+    {
+        if (document.getElementById('display').textContent != 'ERROR') 
         {
-            multipleOperationWithoutEqual(button);
-        }
-        if (numFalse) 
-        {
-            disablingNegativeOrPositiveButton();
+            setStatusFromZeroToNine(true);
+            if(operator == null && button != '=')
+            {
+                gettingFirstNumOperation(button);
+            }    
+            else if (button == '=' && operator != null)
+            {
+                operationClickingEqual();
+            }  
+            else if (button == '=' && operator == null) 
+            {
+                if (display.textContent[display.textContent.length-1] == ',') 
+                    display.textContent = display.textContent.substring(0, display.textContent.length-1)
+
+            }
+            else if (operator != null && result == null)
+            {
+                multipleOperationWithoutEqual(button);
+            }
+            if (isNumFalse) 
+            {
+                setButtonStatus('plusMinus', true);
+            }
         }
     }
+    highlightOperatorButton();
 }
 
 function gettingFirstNumOperation(button)
 {
     operator = button;
-    let display = document.getElementById('display');
     num1 = ConvertToDecimal(display.textContent);
-    numFalse = true;
+    isNumFalse = true;
 }
 
 function operationClickingEqual()
 {
     unhighlightOperatorButton();
-    let display = document.getElementById('display');
     num2 = ConvertToDecimal(display.textContent);
-    if(numFalse) 
+    if(isNumFalse) 
     {
-        disablingAllButtons();
+        setAllButtonsStatus(false);
         return;
     }
     result = mathematicalOperations(operator);
     
     if(countNumbers(resultDisplay(result)) > 10) 
     {
-        disablingAllButtons();
+        setAllButtonsStatus(false);
         return;
     }
     else
         display.textContent = resultDisplay(result)
 
-    numFalse = true;
+    isNumFalse = true;
     num1 = null;
     num2 = null;
     operator = null;
@@ -261,8 +245,7 @@ function operationClickingEqual()
 
 function multipleOperationWithoutEqual(button)
 {
-    let display = document.getElementById('display');
-    if (numFalse) 
+    if (isNumFalse) 
     {
         operator = button;
     }
@@ -273,7 +256,7 @@ function multipleOperationWithoutEqual(button)
 
     display.textContent = resultDisplay(result);
 
-    numFalse = true;
+    isNumFalse = true;
     num1 = result;
     num2 = null;
     operator = button;
@@ -309,14 +292,14 @@ function resultDisplay(result)
 {
     if(Math.abs(result) > 9999999999) 
     {
-        errorBool = true;
+        isErrorInDisplay = true;
         disablingAllButtons();
         return 'ERROR';
     }
     if(Math.abs(result) < 0.000000001) return '0';
     if(isNaN(result) || !(result==result))
     {
-        errorBool = true;
+        isErrorInDisplay = true;
         disablingAllButtons();
         return 'ERROR';
     } 
