@@ -79,7 +79,7 @@ h1{
     margin-top: 10px;
     margin-left: 5px;
 }
-.specialButton:hover {
+.specialButton:hover{
     opacity: 80%;
     cursor: pointer;
 }
@@ -93,13 +93,6 @@ h1{
 .operatorButton:hover {
     opacity: 80%;
     cursor: pointer;
-}
-.hoverOperator{
-    background-color: #c9ed00;
-    height:50px;
-    width: 50px;
-    margin-left: 1px;
-    margin-top: 10px;
 }
 #number0{
     display: inline-block; 
@@ -115,39 +108,4 @@ h1{
 #calculatorButtons{
     position: relative;
     top: -30px;
-}
-.disabledButtons
-{
-    background-color: #ff0000;
-    height:50px;
-    width: 50px;
-    margin-left: 5px;
-    cursor: not-allowed;
-}
-.disabledButton0
-{
-    background-color: #ff0000;
-    border-radius: 15px;
-    height:50px;
-    width: 105px;
-    margin-left: 5px;
-    cursor: not-allowed;
-}
-.disabledOperatorButtons
-{
-    background-color: #ff0000;
-    height:50px;
-    width: 50px;
-    margin-left: 5px;
-    margin-top: 10px;
-    cursor: not-allowed;
-}
-.disabledSpecialButtons
-{
-    background-color: #ff0000;
-    height:50px;
-    width: 50px;
-    margin-top: 10px;
-    margin-left: 5px;
-    cursor: not-allowed;
 }
